@@ -44,7 +44,6 @@ async function main() {
 		})
 
 		camera.monitorInteractions(function(data) {
-			//console.log("Camera: ", data)
 			const token = data.opAccessToken
 			if(!token) {
 				return
@@ -54,18 +53,12 @@ async function main() {
 
 			const headerDst = data.dst
 			const tokenDst = decodedToken.data.dst
-
-
-
-			if(headerDst != tokenDst) {
-				console.log("camera: ALERT!")
-			}
-
 			const headerFunction = data.function.split('.')[2]
 			const tokenFunction = decodedToken.data.operation
 
-			if(headerFunction != tokenFunction) {
-				console.log("camera: ALERT2!")
+			if( headerFunction != tokenFunction  || headerDst != tokenDst ) {
+				console.log("camera: ALERT!")
+				camera.broadcast("alert", "string", "ALERT!")
 			}
 			
 		})
