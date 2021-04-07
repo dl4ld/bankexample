@@ -6,12 +6,13 @@ const cmdOptions = [
 
 
 const options = cmdArgs(cmdOptions)
-options.config = options.config || "./config"
+options.config = options.config || "./cfg.local"
 const config = require(options.config)
 
 const Actor = (options.debug) ?  require('../cllibsecureamqp').Actor : require('secureamqp').Actor
 
 async function main() {
+
 		const guard = new Actor(config)
 		const visitor = new Actor(config)
 		const wife = new Actor(config)
@@ -29,8 +30,6 @@ async function main() {
 		console.log("Started actor visitor with address: ", visitor.id())
 		console.log("Started actor vault with address: ", vault.id())
 		console.log("Started actor camera with address: ", camera.id())
-
-
 		
 		guard.createAbility('sign', null, function(req, res) {
 			console.log("Guard received signing request: ", req.msg)
@@ -85,9 +84,6 @@ async function main() {
 
 		const reply1 = await visitor.talkToActor(wife.id()).call('receiveFlowers', token, { some: 'red tulips'})
 		const reply2 = await visitor.talkToActor(vault.id()).call('open', token, { some: 'red tulips'})
-		
-
-
 }
 
 main()

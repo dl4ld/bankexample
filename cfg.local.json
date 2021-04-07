@@ -1,0 +1,10 @@
+{
+	"rabbit":{
+		"host":"localhost",
+		"login":"user",
+		"password": "password",
+		"ex": "network",
+		"vhost": ""
+	}
+}
+
